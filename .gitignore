@@ -1,0 +1,6 @@
+.DS_Store
+logs/access.log
+logs/error.log
+media/com_townwizard/images/partners
+media/com_townwizard/images/sections
+

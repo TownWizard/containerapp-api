@@ -3,4 +3,6 @@ logs/access.log
 logs/error.log
 administrator/cache/
 cache/
+media/com_townwizard/images/partners
+media/com_townwizard/images/sections
 

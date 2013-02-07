@@ -1,4 +1,6 @@
 .DS_Store
 logs/access.log
 logs/error.log
+administrator/cache/
+cache/
 

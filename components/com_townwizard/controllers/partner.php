@@ -41,6 +41,17 @@ class TownwizardControllerPartner extends JController
             $db = & JFactory::getDBO();
             $db->setQuery($locations->buildQuery($dbQuery));
             $locations = $db->loadAssocList();
+            foreach ($locations as $index => $location)
+            {
+                foreach ($location as $prop => $val)
+                {
+                    if (is_string($val))
+                    {
+                        $location[$prop] = stripslashes($val);
+                    }
+                }
+                $locations[$index] = $location;
+            }
 
             $partner->image = $partner->image ? '/media/com_townwizard/images/partners/' . $partner->image : '';
             $partner->facebook_app_id = $partner->facebook_app_id ? $partner->facebook_app_id : '346995245338206';
@@ -164,7 +175,7 @@ class TownwizardControllerPartner extends JController
             $countDbQuery['group'] = '';
 
             $sql = $model->buildQuery($countDbQuery);
-            
+
             $db->setQuery($sql);
             $total = $db->loadResult();
             
@@ -185,10 +196,13 @@ class TownwizardControllerPartner extends JController
         {
             $partnersIds = array();
             $partnersList = array();
+
             foreach ($partners as $partner)
             {
+                $partner['name'] = stripslashes($partner['name']);
                 $partner['image'] = $partner['image'] ? '/media/com_townwizard/images/partners/' . $partner['image'] : '';
                 $partner['facebook_app_id'] = $partner['facebook_app_id'] ? $partner['facebook_app_id'] : '346995245338206';
+
                 $partnersList[$partner['id']] = $partner;
                 $partnersIds[] = $partner['id'];
             }
@@ -204,6 +218,13 @@ class TownwizardControllerPartner extends JController
 
             foreach ($locations as $location)
             {
+                foreach ($location as $prop => $val)
+                {
+                    if (is_string($val))
+                    {
+                        $location[$prop] = stripslashes($val);
+                    }
+                }
                 $partnersList[$location['partner_id']]['locations'][] = $location;
             }
 

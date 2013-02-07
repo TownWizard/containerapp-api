@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Townwizard API v3.0">
+		<message>
+			<![CDATA[Townwizard API v3.0]]>
+		</message>
+	</layout>
+	<state>
+		<name>Townwizard API v3.0</name>
+		<description>Townwizard API version 3.0 for comminication with container app</description>
+		<params>
+		</params>
+	</state>
+</metadata>

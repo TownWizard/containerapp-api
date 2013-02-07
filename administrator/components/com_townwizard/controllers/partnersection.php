@@ -65,9 +65,13 @@ class TownwizardControllerPartnerSection extends TownwizardController
 
         $parent = $this->getModel('PartnerSection');
         $dbQuery = $parent->getQuery();
-        $dbQuery['conditions'][] = 'parent_id IS NULL OR parent_id = 0';
-        $parent->setQuery($dbQuery);
-        $parents = $parent->getList();
+        if ($partnerSection->id > 0){
+            $dbQuery['conditions'][] = "(parent_id IS NULL OR parent_id = 0) AND partner_id = '{$partnerSection->partner_id}' AND ps.id <> '{$partnerSection->id}'";
+            $parent->setQuery($dbQuery);
+            $parents = $parent->getList();
+        } else {
+            $parents = array();
+        }
 
         $parentslist[]		= JHTML::_('select.option',  '', JText::_( 'Select Parent Partner Section' ), 'id', 'display_name');
         $parentslist			= array_merge( $parentslist, $parents );
@@ -98,6 +102,8 @@ class TownwizardControllerPartnerSection extends TownwizardController
         }
         $lists['ui_type'] = JHTML::_('select.genericlist',  $ui_types, 'ui_type', 'class="inputbox" size="1"',
                                       'value', 'text', $partnerSection->ui_type, 'priority');
+        $lists['android_ui_type'] = JHTML::_('select.genericlist',  $ui_types, 'android_ui_type', 'class="inputbox" size="1"',
+                                              'value', 'text', $partnerSection->android_ui_type, 'priority');
 
         $this->assignRef('lists', $lists);
         $this->assignRef('partnerSection', $partnerSection);

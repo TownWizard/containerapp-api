@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `#__townwizard_section` (
   `default_image` varchar(120) DEFAULT NULL,
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
   `default_url` varchar(255) NOT NULL DEFAULT '',
+  `default_json_api_url` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -75,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `#__townwizard_partner_section` (
   `parent_id` int(11) NOT NULL,
   `url` varchar(255) DEFAULT NULL,
   `ordering` int(11) DEFAULT '0',
+  `ui_type` TINYINT(1) NOT NULL DEFAULT 1,
+  `json_api_url` VARCHAR(255) NULL DEFAULT NULL,  
   PRIMARY KEY (`id`),
   KEY `partner_foreign_key` (`partner_id`),
   KEY `section_foreign_key` (`section_id`),
@@ -85,10 +88,18 @@ CREATE TABLE IF NOT EXISTS `#__townwizard_partner_section` (
 -- ALTER TABLE `#__townwizard_section` CHANGE `default_url` `default_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
 -- ALTER TABLE `#__townwizard_partner_section` CHANGE `url` `url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `#__townwizard_partner_section` ADD `ui_type` TINYINT(1) NOT NULL DEFAULT 1;
-ALTER TABLE `#__townwizard_partner_section` ADD `json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+-- ALTER IGNORE TABLE `#__townwizard_partner_section` ADD `ui_type` TINYINT(1) NOT NULL DEFAULT 1;
+-- ALTER IGNORE TABLE `#__townwizard_partner_section` ADD `json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-ALTER TABLE `#__townwizard_section` ADD `default_json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+-- ALTER IGNORE TABLE `#__townwizard_section` ADD `default_json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+ALTER IGNORE TABLE `#__townwizard_partner_section` ADD `android_json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER IGNORE TABLE `#__townwizard_partner_section` ADD `android_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER IGNORE TABLE `#__townwizard_partner_section` ADD `android_ui_type` TINYINT(1) NOT NULL DEFAULT 1;
+
+ALTER IGNORE TABLE `#__townwizard_section` ADD `default_android_json_api_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER IGNORE TABLE `#__townwizard_section` ADD `default_android_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 -- ALTER IGNORE TABLE `jos_townwizard_partner` ADD `android_app_id` VARCHAR(120) NOT NULL DEFAULT '' AFTER `itunes_app_id`;
 

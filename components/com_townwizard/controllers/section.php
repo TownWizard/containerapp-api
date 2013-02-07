@@ -80,20 +80,20 @@ class TownwizardControllerSection extends JController
         $db->setQuery($sql);
         $pSections = $db->loadObjectList();
 
-        $layout = JRequest::getVar('layout', 'default');
-        $apiV = '1.1';
-        if ($layout == 'api2.1')
-        {
-            $apiV = '2.1';
-        }
+        $apiV = JRequest::getVar('api_version', '1.1');
 
         $partnerSections = array();
         foreach ($pSections as $partnerSection)
         {
             $ui_type = TablePartnerSection::$ui_types[$partnerSection->ui_type];
-            if ($apiV == '2.1')
+            if ($apiV == '2.1' || $apiV == '3.0')
             {
                 $url = $ui_type == 'json' ? $partnerSection->json_api_url : $partnerSection->section_url;
+                if ($apiV == '3.0')
+                {
+                    $android_ui_type = TablePartnerSection::$ui_types[$partnerSection->android_ui_type];
+                    $android_url = $android_ui_type == 'json' ? $partnerSection->android_json_api_url : $partnerSection->android_url;
+                }
             }
             else
             {
@@ -102,16 +102,22 @@ class TownwizardControllerSection extends JController
 
             $ps = array(
                 'id' => $partnerSection->id,
-                'display_name' => $partnerSection->display_name,
-                'url' => $url,
+                'display_name' => stripslashes($partnerSection->display_name),
+                'url' => $ui_type != 'none' ? $url : '',
                 'image_url' => $partnerSection->image_url ? '/media/com_townwizard/images/sections/' . $partnerSection->image_url : '',
                 'partner_id' => $partnerSection->partner_id,
                 'section_name' => $partnerSection->section_name,
                 'sub_sections' => array()
             );
-            if ($apiV == '2.1')
+
+            if ($apiV == '2.1' || $apiV == '3.0')
             {
                 $ps['ui_type'] = $ui_type;
+                if ($apiV == '3.0')
+                {
+                    $ps['android_url'] = $android_ui_type != 'none' ? $android_url : '';
+                    $ps['android_ui_type'] = $android_ui_type;
+                }
             }
 
             if (!$partnerSection->parent_id)
@@ -120,17 +126,22 @@ class TownwizardControllerSection extends JController
             }
             else if (isset($partnerSections[$partnerSection->parent_id]))
             {
+                $partnerSections[$partnerSection->parent_id]['url'] = '';
+                if (isset($partnerSections[$partnerSection->parent_id]['android_url']))
+                {
+                    $partnerSections[$partnerSection->parent_id]['android_url'] = '';
+                }
                 $partnerSections[$partnerSection->parent_id]['sub_sections'][] = $ps;
             }
         }
-
+        /*
         foreach ($partnerSections as $key => $partnerSection)
         {
             if (!empty($partnerSection['sub_sections']))
             {
                 $partnerSections[$key]['url'] = '';
             }
-        }
+        }*/
 
         return $partnerSections;
     }

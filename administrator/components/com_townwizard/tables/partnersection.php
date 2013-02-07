@@ -32,11 +32,17 @@ class TablePartnerSection extends TownwizardTable
 
     public $json_api_url = null;
 
+    public $android_url = null;
+
+    public $android_json_api_url = null;
+
     public $ordering = null;
 
     public $ui_type = null;
 
-    public static $ui_types = array(1 => 'webview', 2 => 'json');
+    public $android_ui_type = null;
+
+    public static $ui_types = array(0 => 'none', 1 => 'webview', 2 => 'json');
 
     protected $_validationRules = array();
 
@@ -53,7 +59,7 @@ class TablePartnerSection extends TownwizardTable
             array('maxlength', 'name', array('maxlength' => 120)),
             array('file', 'image', array('types' => 'jpg,jpeg,png,gif', 'mimes' => 'image/jpeg,image/pjpeg,image/png,image/x-png,image/gif')),
             array('maxlength', 'url, json_api_url', array('maxlength' => 255)),
-            array('in', 'ui_type', array('range' => array_keys(self::$ui_types)))
+            array('in', 'ui_type, android_ui_type', array('range' => array_keys(self::$ui_types)))
         );
     }
 

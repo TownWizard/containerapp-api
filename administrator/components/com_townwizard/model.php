@@ -118,6 +118,17 @@ class TownwizardModel extends Jmodel
         $query = $this->buildQuery();
         $this->_data = $this->_getList($query, $limitstart, $limit);
 
+        foreach ($this->_data as $object)
+        {
+            foreach ($object as $property => $value)
+            {
+                if (is_string($value))
+                {
+                    $object->$property = htmlspecialchars(stripcslashes($value));
+                }
+            }
+        }
+
         return $this->_data;
     }
 
@@ -145,6 +156,13 @@ class TownwizardModel extends Jmodel
             $object = $this->getTable();
         }
 
+        foreach ($object as $property => $value)
+        {
+            if (is_string($value))
+            {
+                $object->$property = htmlspecialchars(stripcslashes($value));
+            }
+        }
         return $object;
     }
 
@@ -159,13 +177,13 @@ class TownwizardModel extends Jmodel
         $this->_row =& $this->getTable();
 
         $data = JRequest::get('post');
-        //print_r($data);
+
         if (!$this->_row->bind($data))
         {
             $this->setError($this->_db->getErrorMsg());
             return false;
         }
-        //print_r($this->_row);
+
         if (!$this->_row->check())
         {
             $this->setError(implode('<br/>', $this->_row->getErrors()));

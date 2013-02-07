@@ -67,6 +67,30 @@ if ($isNew)  {
             </tr>
 
             <tr>
+               <td width="100" align="right" class="key">
+                   <label for="default_android_url">
+                       <?php echo JText::_( 'Default Android URL' ); ?>:
+                   </label>
+               </td>
+               <td>
+                   <input class="text_area" type="text" name="default_android_url" id="default_android_url" size="32" maxlength="255" value="<?php echo $this->section->default_android_url;?>" />
+                   <?php echo TownwizardHelper::getFieldErrors($this->section, 'default_android_url');?>
+               </td>
+           </tr>
+
+           <tr>
+               <td width="100" align="right" class="key">
+                   <label for="default_android_json_api_url">
+                       <?php echo JText::_( 'Default Android JSON API URL' ); ?>:
+                   </label>
+               </td>
+               <td>
+                   <input class="text_area" type="text" name="default_android_json_api_url" id="default_android_json_api_url" size="32" maxlength="255" value="<?php echo $this->section->default_android_json_api_url;?>" />
+                   <?php echo TownwizardHelper::getFieldErrors($this->section, 'default_android_json_api_url');?>
+               </td>
+           </tr>
+
+            <tr>
                 <td class="key">
                     <label for="is_default">
                         <?php echo JText::_( 'Is default section' ); ?>:

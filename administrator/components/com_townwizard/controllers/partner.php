@@ -104,18 +104,19 @@ class TownwizardControllerPartner extends TownwizardController
         {
             $model = $this->getModel();
             $model->setId(JRequest::getVar('id', 0, '', 'int'));
-            $fileName = $model->getOne()->image;
+            $modelObject = $model->getOne();
+            $imageFileName = $modelObject->image;
 
-            JRequest::setVar('image', $fileName, 'POST');
+            JRequest::setVar('image', $imageFileName, 'POST');
 
             if ($model->store()) {
                 $model->getRow()->reorder($model->getRow()->getReorderCondition());
 
-                if (strlen($model->getRow()->image) > 0 && $fileName != $model->getRow()->image)
+                if (strlen($model->getRow()->image) > 0 && $imageFileName != $model->getRow()->image)
                 {
                     $uploadPath = JPATH_SITE.DS.'media'.DS.'com_townwizard'.DS.'images'.DS.'partners';
                     $model->getRow()->uploadFile('image', $uploadPath);
-                    $filePath = $uploadPath . DS . $fileName;
+                    $filePath = $uploadPath . DS . $imageFileName;
 
                     if (JFile::exists($filePath))
                     {
@@ -141,21 +142,21 @@ class TownwizardControllerPartner extends TownwizardController
                     $dbQuery = $partnerSection->getQuery();
                     $dbQuery['fields'] = array('DISTINCT ps.section_id');
                     $dbQuery['conditions'][] = 'ps.section_id IN(' . implode(',', $defaultSections) . ')';
-                    $dbQuery['conditions'][] = 'ps.partner_id = ' . $model->getId();
+                    $dbQuery['conditions'][] = 'ps.partner_id = ' . $model->getRow()->id;
 
                     $db->setQuery($partnerSection->buildQuery($dbQuery));
                     $partnerSections = $db->loadResultArray();
 
                     $unaddedSections = array_diff($defaultSections, $partnerSections);
-                    $psTable = $partnerSection->getTable();
-                    $partnerId = $model->getId();
+                    $partnerId = $model->getRow()->id;
+
                     foreach ($unaddedSections as $sectionId)
                     {
+                        $psTable = $partnerSection->getTable();
                         $psTable->bind(array('partner_id' => $partnerId, 'section_id' => $sectionId));
                         $psTable->store();
                     }
                 }
-
 
                 $msg = JText::_('Partner Saved!');
                 $link = 'index.php?option=com_townwizard&controller=partner';

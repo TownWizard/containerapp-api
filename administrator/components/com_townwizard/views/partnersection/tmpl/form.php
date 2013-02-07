@@ -70,6 +70,32 @@ if ($isNew)  {
             </tr>
 
             <tr>
+                <td width="100" align="right" class="key">
+                    <label for="android_url">
+                        <?php echo JText::_( 'Android Url' ); ?>:
+                    </label>
+                </td>
+                <td>
+                    <p>If not specified then default section android url will be used</p>
+                    <input class="text_area" type="text" name="android_url" id="android_url" size="32" maxlength="255" value="<?php echo $this->partnerSection->android_url;?>" />
+                    <?php echo TownwizardHelper::getFieldErrors($this->partnerSection, 'android_url');?>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" align="right" class="key">
+                    <label for="android_json_api_url">
+                        <?php echo JText::_( 'Android JSON API Url' ); ?>:
+                    </label>
+                </td>
+                <td>
+                    <p>If not specified then default section Android JSON API url will be used</p>
+                    <input class="text_area" type="text" name="android_json_api_url" id="android_json_api_url" size="32" maxlength="255" value="<?php echo $this->partnerSection->android_json_api_url;?>" />
+                    <?php echo TownwizardHelper::getFieldErrors($this->partnerSection, 'android_json_api_url');?>
+                </td>
+            </tr>
+
+            <tr>
                 <td width="100" align="right" class="key24">
                     <label for="image">
                         <?php echo JText::_( "Image" ); ?>:
@@ -148,6 +174,21 @@ if ($isNew)  {
                 <td>
                     <?php echo $this->lists['ui_type'];?>
                     <?php echo TownwizardHelper::getFieldErrors($this->partnerSection, 'ui_type');?>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="key">
+                    <label for="android_ui_type">
+                        <?php echo JText::_( 'Android UI Type' ); ?>:
+                    </label>
+                    <p>
+                        WebView by default. Choose any other value if you sure that partner's site support this type of UI.
+                    </p>
+                </td>
+                <td>
+                    <?php echo $this->lists['android_ui_type'];?>
+                    <?php echo TownwizardHelper::getFieldErrors($this->partnerSection, 'android_ui_type');?>
                 </td>
             </tr>
         </table>

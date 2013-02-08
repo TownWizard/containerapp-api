@@ -33,7 +33,7 @@ class JConfig {
 	var $dbtype = 'mysql';
 	var $host = 'localhost';
 	var $user = 'root';
-	var $db = 'townwizardcontainerapp';
+	var $db = 'townwizardcontainerappv30';
 	var $dbprefix = 'jos_';
 	var $mailer = 'mail';
 	var $mailfrom = 'yogi.ghorecha@gmail.com';

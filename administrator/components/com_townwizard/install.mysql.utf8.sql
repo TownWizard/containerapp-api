@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `#__townwizard_partner` (
   `priority` tinyint(1) DEFAULT '0',
   `ordering` int(11) DEFAULT '0',
   `featured_partner` tinyint(1) NOT NULL DEFAULT '0',
+  `language` char(2) NOT NULL DEFAULT 'en',
+  `hidden` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `creator_foreign_key` (`creator_id`),
   KEY `partner_category_foreign_key` (`partner_category_id`)

@@ -116,6 +116,18 @@ if ($isNew)  {
             </tr>
 
             <tr>
+                <td width="100" align="right" class="key">
+                    <label for="language">
+                        <?php echo JText::_( ' Language' ); ?>:
+                    </label>
+                </td>
+                <td>
+                    <input class="text_area" type="text" name="language" id="language" size="2" maxlength="2" value="<?php echo $this->partner->language;?>" />
+                    <?php echo TownwizardHelper::getFieldErrors($this->partner, 'language');?>
+                </td>
+            </tr>            
+
+            <tr>
                 <td width="100" align="right" class="key24">
                     <label for="image">
                         <?php echo JText::_( "Image" ); ?>:
@@ -156,6 +168,18 @@ if ($isNew)  {
                     <?php echo TownwizardHelper::getFieldErrors($this->partner, 'featured_partner');?>
                 </td>
             </tr>
+
+            <tr>
+                <td class="key">
+                    <label for="hidden">
+                        <?php echo JText::_( 'Hidden' ); ?>:
+                    </label>
+                </td>
+                <td>
+                    <?php echo $this->lists['hidden'];?>
+                    <?php echo TownwizardHelper::getFieldErrors($this->partner, 'hidden');?>
+                </td>
+            </tr>            
 
             <tr>
                 <td class="key">

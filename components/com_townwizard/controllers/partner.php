@@ -17,6 +17,7 @@ jimport('joomla.application.component.controller');
 
 class TownwizardControllerPartner extends JController
 {
+
     public function partner()
     {
         $model = $this->getModel('Partner');
@@ -27,8 +28,10 @@ class TownwizardControllerPartner extends JController
 
         $partner = $model->getOne();
 
+        $apiV = JRequest::getVar('api_version', '1.1');
+
         $response = array('status' => 0, 'error' => '', 'data' => array());
-        if ($partner->id)
+        if ($partner->id && !(self::is_partner_hidden($apiV, $partner->hidden)))
         {
             $category = $this->getModel('PartnerCategory');
             $category->setId($partner->partner_category_id);
@@ -55,6 +58,11 @@ class TownwizardControllerPartner extends JController
 
             $partner->image = $partner->image ? '/media/com_townwizard/images/partners/' . $partner->image : '';
             $partner->facebook_app_id = $partner->facebook_app_id ? $partner->facebook_app_id : '346995245338206';
+            
+            if($apiV < '3.1') {
+                unset($partner->language);
+                unset($partner->hidden);
+            }
 
             $response['status'] = 1;
             $response['data'] = array_merge(
@@ -197,13 +205,21 @@ class TownwizardControllerPartner extends JController
             $partnersIds = array();
             $partnersList = array();
 
+            $apiV = JRequest::getVar('api_version', '1.1');
+
             foreach ($partners as $partner)
             {
-                $partner['name'] = stripslashes($partner['name']);
+                if(self::is_partner_hidden($apiV, $partner['hidden'])) continue;
+
+                $partner['name'] = stripslashes($partner['name']);                
                 $partner['image'] = $partner['image'] ? '/media/com_townwizard/images/partners/' . $partner['image'] : '';
                 $partner['facebook_app_id'] = $partner['facebook_app_id'] ? $partner['facebook_app_id'] : '346995245338206';
 
-                $partnersList[$partner['id']] = $partner;
+                if($apiV < '3.1') {
+                    unset($partner['language']);
+                    unset($partner['hidden']);
+                }
+                $partnersList[$partner['id']] = $partner;                
                 $partnersIds[] = $partner['id'];
             }
 
@@ -250,5 +266,11 @@ class TownwizardControllerPartner extends JController
         echo json_encode($response);
         exit();
     }
+
+    private function is_partner_hidden($api_version, $partner_hidden)
+    {
+        return ($api_version < '3.1' && $partner_hidden);
+    }
+
 }
 ?>

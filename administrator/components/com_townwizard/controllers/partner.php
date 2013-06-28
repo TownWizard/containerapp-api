@@ -63,6 +63,7 @@ class TownwizardControllerPartner extends TownwizardController
 
         $lists['published'] = JHTML::_('select.booleanlist',  'published', '', $partner->published );
         $lists['featured_partner'] = JHTML::_('select.booleanlist',  'featured_partner', '', $partner->featured_partner );
+        $lists['hidden'] = JHTML::_('select.booleanlist',  'hidden', '', $partner->hidden );
 
         $priority[] = JHTML::_('select.option', '0', '0');
         $priority[] = JHTML::_('select.option', '1', '1');

@@ -44,12 +44,16 @@ class TablePartner extends TownwizardTable
 
     public $featured_partner = null;
 
+    public $language = null;
+
+    public $hidden = null;
+
     protected $_validationRules = array(
-        array('required', 'name, creator_id, partner_category_id, website_url, published, featured_partner'),
+        array('required', 'name, creator_id, partner_category_id, website_url, published, featured_partner, language, hidden'),
         array('maxlength', 'name, itunes_app_id, android_app_id, website_url', array('maxlength' => 120)),
         array('maxlength', 'phone_number, facebook_app_id', array('maxlength' => 30)),
         array('url', 'website_url'),
-        array('boolean', 'published, featured_partner'),
+        array('boolean', 'published, featured_partner, hidden'),
         array('numeric', 'facebook_app_id'),
         array('file', 'image', array('types' => 'jpg,jpeg,png,gif', 'mimes' => 'image/jpeg,image/pjpeg,image/png,image/x-png,image/gif'))
     );

@@ -60,6 +60,12 @@ function TownwizardParseRoute($segments)
     {
         $apiV = '3.0';
     }
+    else if ($layout == 'api3.1')
+    {
+        $apiV = '3.1';   
+    }
+
+
     $vars['api_version'] = $apiV;
 
     return $vars;

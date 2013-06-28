@@ -103,7 +103,8 @@ class TownwizardControllerPartner extends JController
         $pquery = $partner->getQuery();
         $dbQuery['fields'] = $pquery['fields'];
         $dbQuery['joins'][] = array_pop($pquery['joins']);
-        $dbQuery['order'] = 'p.ordering';
+        //$dbQuery['order'] = 'p.ordering';
+        $dbQuery['order'] = 'p.id';
 
         if (strlen(trim($query)) > 0)
         {

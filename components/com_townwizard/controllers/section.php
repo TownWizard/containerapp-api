@@ -86,10 +86,10 @@ class TownwizardControllerSection extends JController
         foreach ($pSections as $partnerSection)
         {
             $ui_type = TablePartnerSection::$ui_types[$partnerSection->ui_type];
-            if ($apiV == '2.1' || $apiV == '3.0')
+            if ($apiV >= '2.1')
             {
                 $url = $ui_type == 'json' ? $partnerSection->json_api_url : $partnerSection->section_url;
-                if ($apiV == '3.0')
+                if ($apiV >= '3.0')
                 {
                     $android_ui_type = TablePartnerSection::$ui_types[$partnerSection->android_ui_type];
                     $android_url = $android_ui_type == 'json' ? $partnerSection->android_json_api_url : $partnerSection->android_url;
@@ -110,10 +110,10 @@ class TownwizardControllerSection extends JController
                 'sub_sections' => array()
             );
 
-            if ($apiV == '2.1' || $apiV == '3.0')
+            if ($apiV >= '2.1')
             {
                 $ps['ui_type'] = $ui_type;
-                if ($apiV == '3.0')
+                if ($apiV >= '3.0')
                 {
                     $ps['android_url'] = $android_ui_type != 'none' ? $android_url : '';
                     $ps['android_ui_type'] = $android_ui_type;
